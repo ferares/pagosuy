@@ -1,0 +1,1 @@
+export const emailPattern = "[^@]+@[^@]+\.[a-zA-Z]{2,}"
