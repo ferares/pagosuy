@@ -60,23 +60,20 @@ export default function SignupForm() {
   }, [email, password, pushAlert, pushScreenReaderAlert, router, searchParams, setLoading])
 
   return (
-    <form method="POST" noValidate className={wasValidated ? "was-validated" : ""} onSubmit={handleSubmit}>
-      <div className="input-field-row">
-        <label htmlFor="email">Email (required)</label>
-        <input ref={emailRef} type="email" name="email" id="email" value={email} required pattern={emailPattern} onChange={(event) => setEmail(event.target.value)} />
+    <form method="POST" noValidate className={`form ${wasValidated ? "was-validated" : ""}`} onSubmit={handleSubmit}>
+      <div className="form__row">
+        <label className="form__label" htmlFor="email">Email (required)</label>
+        <input className="form__control" ref={emailRef} type="email" name="email" id="email" value={email} required pattern={emailPattern} onChange={(event) => setEmail(event.target.value)} />
         <div className="invalid-feedback">Input a valid email</div>
       </div>
-      <div className="input-field-row">
-        <label htmlFor="password">Password (required)</label>
-        <input ref={passwordRef} type="password" name="password" id="password" value={password} required onChange={(event) => setPassword(event.target.value)} />
+      <div className="form__row">
+        <label className="form__label" htmlFor="password">Password (required)</label>
+        <input className="form__control" ref={passwordRef} type="password" name="password" id="password" value={password} required onChange={(event) => setPassword(event.target.value)} />
         <div className="invalid-feedback">Input a password</div>
       </div>
-      <button type="submit" className="btn btn-primary">
+      <button type="submit" className="btn">
         Signup
       </button>
-      <br />
-      <br />
-      <br />
       <Link href="/signin">Already have an account?</Link>
     </form>
   )

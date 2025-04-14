@@ -1,2 +1,18 @@
+/* Variables */
 @import url("./variables.css");
+
+/* Animations */
+@import url("./animations.css");
+
+/* Reset */
 @import url("./reset.css");
+
+/* General */
+@import url("./base.css");
+@import url("./alert.css");
+@import url("./form.css");
+
+/* Components */
+@import url("./header.css");
+@import url("./footer.css");
+@import url("./loader.css");

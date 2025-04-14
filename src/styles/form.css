@@ -1,0 +1,35 @@
+.form {
+  display: grid;
+  gap: 1rem;
+}
+
+.form__row {
+  display: grid;
+  gap: .5rem;
+}
+
+.form__label {
+  font-size: 1.125rem;
+}
+
+.form__control {
+  border: 1px solid var(--border-color-form-controls);
+  border-radius: var(--border-radius);
+  font-size: 1.25rem;
+  padding: .5rem;
+}
+
+.form__control:focus {
+  outline: 2px solid var(--outline-color-form-controls);
+}
+
+.invalid-feedback {
+  color: #F00;
+  font-size: .8rem;
+  display: none;
+}
+
+.was-validated *:invalid + .invalid-feedback,
+.was-validated *[aria-invalid="true"] + .invalid-feedback {
+  display: block;
+}

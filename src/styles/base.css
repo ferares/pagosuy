@@ -1,0 +1,58 @@
+.main {
+  flex-grow: 1;
+  margin: 0 auto;
+  max-width: var(--max-width);
+  overflow: auto;
+  padding: 1rem;
+  width: 100%;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.btn {
+  background-color: var(--bg-color-buttons);
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: transparent 0 0 0 3px, rgba(18 18 18 / 10%) 0 6px 20px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.5rem;
+  padding: 1rem;
+  transition: all .5s;
+}
+
+.btn:hover {
+  box-shadow: transparent 0 0 0 3px, rgba(18  18  18 / 20%) 0 8px 24px;
+}
+
+.visually-hidden {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+.visually-hidden-focusable:not(:focus):not(:focus-within),
+.visually-hidden {
+  border: 0 !important;
+  clip: rect(0,0,0,0) !important;
+  height: 1px !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  padding: 0 !important;
+  white-space: nowrap !important;
+  width: 1px !important;
+}
+
+.visually-hidden-focusable:not(:focus):not(:focus-within):not(caption),
+.visually-hidden:not(caption) {
+  position: absolute !important;
+}

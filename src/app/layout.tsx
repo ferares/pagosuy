@@ -1,8 +1,17 @@
 import { Roboto } from "next/font/google"
 
-import "../styles/app.css"
+import { config } from "@fortawesome/fontawesome-svg-core"
+
 import { LoaderProvider } from "@/contexts/Loader"
 import { AlertsProvider } from "@/contexts/Alerts"
+
+import Header from "@/components/Header"
+import Footer from "@/components/Footer"
+
+import "../styles/app.css"
+
+// We load FA's styles on app.css to prevent FOUC
+config.autoAddCss = false
 
 const roboto = Roboto({ variable: "--font-roboto", display: "swap", subsets: ["latin"] })
 
@@ -12,7 +21,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body className={`${roboto.variable}`}>
         <LoaderProvider>
           <AlertsProvider>
-            {children}
+            <Header />
+            <main id="main" className="main">
+              {children}
+            </main>
+            <Footer />
           </AlertsProvider>
         </LoaderProvider>
       </body>

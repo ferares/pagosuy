@@ -1,0 +1,11 @@
+.header {
+  background-color: var(--bg-color-header);
+  color: #fff;
+  padding: 1rem;
+}
+
+.header__content {
+  margin: 0 auto;
+  max-width: var(--max-width);
+  padding: 0 1rem;
+}

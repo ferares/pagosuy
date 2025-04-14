@@ -21,7 +21,7 @@ model User {
   password String
   reset_password_token String? @unique
   reset_password_ttl DateTime?
-  movements movementUser[]
+  transactions TransactionUser[]
   debts Balance[] @relation(name: "creditor")
   credits Balance[] @relation(name: "debtor")
   sessions Session[]
@@ -39,14 +39,14 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
-model movement {
+model Transaction {
   id Int @id @default(autoincrement())
   amount Decimal
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model movementUser {
+model TransactionUser {
   id Int @id @default(autoincrement())
   user User @relation(fields: [userId], references: [id])
   userId Int

@@ -2,10 +2,20 @@
   box-sizing: border-box;
 }
 
-html {
-  font-family: var(--font-family);
+body {
+  background-color: var(--bg-color);
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-roboto);
+  height: 100vh;
+  margin: 0;
 }
 
-body {
+h1, h2, h3, h4, h5, h6 {
   margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }
