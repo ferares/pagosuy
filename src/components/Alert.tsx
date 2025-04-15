@@ -2,6 +2,8 @@
 
 import { type PropsWithChildren, useEffect, useRef, useState } from "react"
 
+import { useTranslations } from "next-intl"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faClose } from "@fortawesome/free-solid-svg-icons"
 
@@ -14,6 +16,7 @@ interface AlertComponentProps extends PropsWithChildren {
 }
 
 export default function AlertComponent({ type, timeout, children, removeAlert }: AlertComponentProps) {
+  const t = useTranslations("Labels")
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   const [hiding, setHiding] = useState(false)
 
@@ -25,7 +28,7 @@ export default function AlertComponent({ type, timeout, children, removeAlert }:
 
   return (
     <div className={`alert alert--${type} ${hiding ? "hide" : ""}`} role="alert" onAnimationEnd={() => (hiding) && removeAlert()}>
-      <button type="button" className="alert__close" title={"Close"} onClick={() => setHiding(true)}>
+      <button type="button" className="alert__close" title={t("close")} onClick={() => setHiding(true)}>
         <FontAwesomeIcon icon={faClose} />
       </button>
       <div>

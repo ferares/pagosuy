@@ -1,24 +1,27 @@
 import { Link } from "@/i18n/navigation"
 
+import { getTranslations } from "next-intl/server"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChartLine, faClipboardList, type IconDefinition } from "@fortawesome/free-solid-svg-icons"
 
-import { type Href } from "@/i18n/request"
+import { type TranslationKey, type Href } from "@/i18n/request"
 
-const links: { icon: IconDefinition, label: string, href: Href }[] = [
+const links: { icon: IconDefinition, label: TranslationKey, href: Href }[] = [
   {
     icon: faChartLine,
-    label: "Dashboard",
+    label: "Labels.dashboard",
     href: "/admin",
   },
   {
     icon: faClipboardList,
-    label: "Transactions",
+    label: "Labels.transactions",
     href: "/admin/transactions",
   },
 ]
 
-export default function Sidebar() {
+export default async function Sidebar() {
+  const t = await getTranslations()
   return (
     <nav className="sidebar">
       <ul className="sidebar__list">
@@ -26,7 +29,7 @@ export default function Sidebar() {
           <li key={index}>
             <Link href={link.href}>
               <FontAwesomeIcon icon={link.icon} />
-              {link.label}
+              {t(link.label)}
             </Link>
           </li>
         ))}

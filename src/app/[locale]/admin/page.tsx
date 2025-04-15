@@ -1,11 +1,14 @@
 import Link from "next/link"
 
-export default function Admin() {
+import { getTranslations } from "next-intl/server"
+
+export default async function Admin() {
+  const t = await getTranslations("Labels")
   return (
     <div>
-      <h1>Admin</h1>
+      <h1>{t("admin")}</h1>
       <Link prefetch={false} href="/api/auth/signout">
-        Signout
+        {t("signout")}
       </Link>
     </div>
   )
