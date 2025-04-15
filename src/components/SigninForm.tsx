@@ -77,7 +77,7 @@ export default function SigninForm() {
         Signin
       </button>
       {/* <Link href="/recover-password">Forgot your password?</Link> */}
-      <Link href="/signup">Don&apos;t have an account yet?</Link>
+      <Link href="/auth/signup">Don&apos;t have an account yet?</Link>
     </form>
   )
 }

@@ -9,3 +9,13 @@
   max-width: var(--max-width);
   padding: 0 1rem;
 }
+
+.header__link {
+  align-items: center;
+  display: flex;
+}
+
+.header__icon {
+  width: 2rem;
+  margin-right: .5rem;
+}

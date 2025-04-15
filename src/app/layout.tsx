@@ -1,3 +1,4 @@
+import { type Metadata } from "next"
 import { Roboto } from "next/font/google"
 
 import { config } from "@fortawesome/fontawesome-svg-core"
@@ -15,6 +16,8 @@ config.autoAddCss = false
 
 const roboto = Roboto({ variable: "--font-roboto", display: "swap", subsets: ["latin"] })
 
+export const metadata: Metadata = { robots: "noindex,nofollow" }
+
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
@@ -22,9 +25,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <LoaderProvider>
           <AlertsProvider>
             <Header />
-            <main id="main" className="main">
-              {children}
-            </main>
+            {children}
             <Footer />
           </AlertsProvider>
         </LoaderProvider>

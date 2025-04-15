@@ -2,6 +2,6 @@ import Link from "next/link"
 
 export default function Home() {
   return (
-    <Link href="/signin">Signin!</Link>
+    <Link href="/auth/signin">Signin!</Link>
   )
 }

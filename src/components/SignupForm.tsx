@@ -74,7 +74,7 @@ export default function SignupForm() {
       <button type="submit" className="btn">
         Signup
       </button>
-      <Link href="/signin">Already have an account?</Link>
+      <Link href="/auth/signin">Already have an account?</Link>
     </form>
   )
 }
