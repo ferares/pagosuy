@@ -1,9 +1,11 @@
 "use client"
 
-import { useRouter, useSearchParams } from "next/navigation"
-import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 
 import { type FormEvent, startTransition, useCallback, useRef, useState } from "react"
+
+import { type Href } from "@/i18n/request"
+import { Link, useRouter } from "@/i18n/navigation"
 
 import { emailPattern } from "@/helpers/strings"
 
@@ -39,7 +41,7 @@ export default function SigninForm() {
         return startTransition(() => {
           const redirect = searchParams.get("redirect")
           if (redirect) {
-            router.push(redirect)
+            router.push(redirect as Href)
           } else {
             router.push("/admin")
           }

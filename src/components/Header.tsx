@@ -1,4 +1,4 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMoneyBillWave } from "@fortawesome/free-solid-svg-icons"

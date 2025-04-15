@@ -1,9 +1,11 @@
-import Link from "next/link"
+import { Link } from "@/i18n/navigation"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faChartLine, faClipboardList, type IconDefinition } from "@fortawesome/free-solid-svg-icons"
 
-const links: { icon: IconDefinition, label: string, href: string }[] = [
+import { type Href } from "@/i18n/request"
+
+const links: { icon: IconDefinition, label: string, href: Href }[] = [
   {
     icon: faChartLine,
     label: "Dashboard",

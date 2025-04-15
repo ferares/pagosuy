@@ -1,9 +1,10 @@
 "use client"
 
 import { useRouter, useSearchParams } from "next/navigation"
-import Link from "next/link"
 
 import { type FormEvent, startTransition, useCallback, useRef, useState } from "react"
+
+import { Link } from "@/i18n/navigation"
 
 import { emailPattern } from "@/helpers/strings"
 

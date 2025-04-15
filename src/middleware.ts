@@ -1,8 +1,14 @@
 import { NextResponse, type NextRequest } from "next/server"
 
+import createMiddleware from "next-intl/middleware"
+
+import { routing } from "./i18n/routing"
+
 import { deleteSessionCookie, getSessionFromCookie } from "./helpers/session"
 
 const { APP_URL } = process.env
+ 
+const intlMiddleware = createMiddleware(routing)
 
 export default async function Middleware(request: NextRequest) {
   if (request.nextUrl.pathname.includes("/admin")) {
@@ -14,5 +20,9 @@ export default async function Middleware(request: NextRequest) {
       return redirectResponse
     }
   }
-  return NextResponse.next()
+  return intlMiddleware(request)
+}
+ 
+export const config = {
+  matcher: ["/", "/(en)/:path*"]
 }
