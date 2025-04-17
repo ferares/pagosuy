@@ -1,5 +1,3 @@
 export default function Transactions() {
-  return (
-    null
-  )
+  return "Transactions"
 }

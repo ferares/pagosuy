@@ -6,7 +6,9 @@
   --bg-color: var(--color-grey);
   --bg-color-header: var(--color-green);
   --bg-color-footer: var(--color-green);
+  --bg-color-sidebar: var(--color-green);
   --bg-color-buttons: var(--color-teal);
+  --text-color: #fff;
   --border-color-form-controls: var(--color-teal);
   --outline-color-form-controls: var(--color-green);
   --border-radius: 10px;

@@ -1,8 +1,31 @@
 .sidebar {
-  background-color: aqua;
+  background-color: var(--bg-color-sidebar);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
   height: 100%;
+  justify-content: space-between;
   left: 0;
+  overflow: auto;
+  padding: 1rem 2rem;
   position: absolute;
   top: 0;
-  width: 200px;
+  width: 300px;
+}
+
+.sidebar__list {
+  display: grid;
+  gap: 2rem;
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar__link {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+}
+
+.sidebar__icon {
+  width: 2rem;
 }

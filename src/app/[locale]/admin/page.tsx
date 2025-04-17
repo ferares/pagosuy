@@ -1,5 +1,3 @@
-import Link from "next/link"
-
 import { getTranslations } from "next-intl/server"
 
 export default async function Admin() {
@@ -7,9 +5,6 @@ export default async function Admin() {
   return (
     <div>
       <h1>{t("admin")}</h1>
-      <Link prefetch={false} href="/api/auth/signout">
-        {t("signout")}
-      </Link>
     </div>
   )
 }

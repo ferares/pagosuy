@@ -6,7 +6,12 @@
     "admin": "Admin",
     "close": "Close",
     "dashboard": "Dashboard",
+    "profile": "Profile",
     "transactions": "Transactions",
+    "accounts": "Accounts",
+    "balances": "Balances",
+    "currencies": "Currencies",
+    "categories": "Categories",
     "required": "required",
     "email": "Email",
     "password": "Password"
