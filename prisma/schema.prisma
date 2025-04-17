@@ -14,6 +14,11 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum CategoryType {
+  IN
+  OUT
+}
+
 model User {
   id Int @id @default(autoincrement())
   email String @unique
@@ -21,10 +26,11 @@ model User {
   password String
   reset_password_token String? @unique
   reset_password_ttl DateTime?
-  transactions TransactionUser[]
   debts Balance[] @relation(name: "creditor")
   credits Balance[] @relation(name: "debtor")
   sessions Session[]
+  userAccounts UserAccount[]
+  userTransactions UserTransaction[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -32,9 +38,45 @@ model User {
 model Session {
   id Int @id @default(autoincrement())
   key String @unique
-  user User @relation(fields: [userId], references: [id])
-  userId Int
   lastSeen DateTime
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id Int @id @default(autoincrement())
+  name String
+  amount Decimal
+  currencyId Int
+  currency Currency @relation(fields: [currencyId], references: [id])
+  transactions Transaction[]
+  transfersIn Transfer[] @relation("receiver")
+  transfersOut Transfer[] @relation("sender")
+  userAccounts UserAccount[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UserAccount {
+  id Int @id @default(autoincrement())
+  userId Int
+  accountId Int
+  user User @relation(fields: [userId], references: [id])
+  account Account @relation(fields: [accountId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transfer {
+  id Int @id @default(autoincrement())
+  amountOut Decimal
+  amountIn Decimal
+  senderId Int
+  receiverId Int
+  sender Account @relation(fields: [senderId], references: [id], name: "sender")
+  receiver Account @relation(fields: [receiverId], references: [id], name: "receiver")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -42,25 +84,57 @@ model Session {
 model Transaction {
   id Int @id @default(autoincrement())
   amount Decimal
+  accountId Int
+  categoryId Int?
+  account Account @relation(fields: [accountId], references: [id])
+  category Category? @relation(fields: [categoryId], references: [id])
+  userTransactions UserTransaction[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model TransactionUser {
+model UserTransaction {
   id Int @id @default(autoincrement())
-  user User @relation(fields: [userId], references: [id])
+  amount Int
   userId Int
-  amount Decimal
+  TransactionId Int
+  user User @relation(fields: [userId], references: [id])
+  transaction Transaction @relation(fields: [TransactionId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Balance {
   id Int @id @default(autoincrement())
-  creditor User @relation(fields: [creditorId], references: [id], name: "creditor")
+  amount Int
+  currencyId Int
   creditorId Int
-  debtor User @relation(fields: [debtorId], references: [id], name: "debtor")
   debtorId Int
+  creditor User @relation(fields: [creditorId], references: [id], name: "creditor")
+  debtor User @relation(fields: [debtorId], references: [id], name: "debtor")
+  currency Currency @relation(fields: [currencyId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id Int @id @default(autoincrement())
+  name String
+  parentId Int?
+  type CategoryType
+  parentCategory Category?  @relation("parentCategory", fields: [parentId], references: [id])
+  subCategories Category[] @relation("parentCategory")
+  transactions Transaction[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Currency {
+  id Int @id @default(autoincrement())
+  name String
+  shortName String
+  accounts Account[]
+  balances Balance[]
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
