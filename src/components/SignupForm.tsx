@@ -2,11 +2,12 @@
 
 import { type FormEvent, startTransition, useCallback, useRef, useState } from "react"
 
-import { useRouter, useSearchParams } from "next/navigation"
+import { useSearchParams } from "next/navigation"
 
 import { useTranslations } from "next-intl"
 
-import { Link } from "@/i18n/navigation"
+import { Link, useRouter } from "@/i18n/navigation"
+import { type Href } from "@/i18n/request"
 
 import { emailPattern } from "@/helpers/strings"
 
@@ -43,7 +44,7 @@ export default function SignupForm() {
         return startTransition(() => {
           const redirect = searchParams.get("redirect")
           if (redirect) {
-            router.push(redirect)
+            router.push(redirect as Href)
           } else {
             router.push("/admin")
           }
