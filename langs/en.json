@@ -14,7 +14,11 @@
     "categories": "Categories",
     "required": "required",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "name": "Name",
+    "currency": "Currency",
+    "balance": "Balance",
+    "create-account": "Create Account"
   },
   "Messages": {
     "invalid-form": "Form submission failed. Review the required fields",
@@ -26,6 +30,8 @@
     "error": "An error occurred, please try again later",
     "input-an-email": "Input a valid email",
     "input-a-password": "Input a password",
+    "input-a-name": "Input a name",
+    "input-a-balance": "Input a balance",
     "dont-have-account": "Don't have an account yet?",
     "have-account": "Already have an account?",
     "forgot-password": "Forgot your password?"
