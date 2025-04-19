@@ -19,13 +19,19 @@
     "name": "Name",
     "currency": "Currency",
     "balance": "Balance",
-    "create-account": "Create Account"
+    "type": "Type",
+    "income": "Income",
+    "expense": "Expense",
+    "create-account": "Create Account",
+    "create-transaction": "Create Transaction",
+    "create-category": "Create Category"
   },
   "Messages": {
     "invalid-form": "Form submission failed. Review the required fields",
+    "submitting": "Processing request, please wait",
     "signin-submitting": "verifying credentials, please wait",
     "signin-bad-email": "There is no user with the provided email address",
-    "signin-bad-password": "Wrong password. Try again or choose \"Forgot your password?\".",
+    "signin-bad-password": "Wrong password. Try again or choose \"Forgot your password?\"",
     "signup-submitting": "Processing, please wait",
     "signup-bad-email": "Email address already registered",
     "error": "An error occurred, please try again later",
@@ -33,9 +39,11 @@
     "input-a-password": "Input a password",
     "input-a-name": "Input a name",
     "input-a-balance": "Input a balance",
+    "select-a-type": "Select a type",
     "dont-have-account": "Don't have an account yet?",
     "have-account": "Already have an account?",
-    "forgot-password": "Forgot your password?"
+    "forgot-password": "Forgot your password?",
+    "category-already-exists": "There's already a category with that name"
   },
   "Metadata": {
     "description": "PagosUY"

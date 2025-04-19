@@ -8,6 +8,7 @@
   --bg-color-footer: var(--color-green);
   --bg-color-sidebar: var(--color-green);
   --bg-color-buttons: var(--color-teal);
+  --bg-color-form-controls: #fff;
   --text-color: #fff;
   --border-color-form-controls: var(--color-teal);
   --outline-color-form-controls: var(--color-green);

@@ -23,3 +23,7 @@ a {
 ul, ol {
   margin: 0;
 }
+
+select {
+  cursor: pointer;
+}

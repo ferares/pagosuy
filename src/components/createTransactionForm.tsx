@@ -11,7 +11,7 @@ import { useRouter } from "@/i18n/navigation"
 import { useAlertsContext } from "@/contexts/Alerts"
 import { useLoaderContext } from "@/contexts/Loader"
 
-export default function CreateAccountForm() {
+export default function CreateTransactionForm() {
   const t = useTranslations()
   const locale = useLocale()
   const currencies = getAllCurrencies(locale)
@@ -29,7 +29,7 @@ export default function CreateAccountForm() {
   const handleSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault()
     event.stopPropagation()
-    if ((!nameRef.current?.validity.valid) || (!balanceRef.current?.validity.valid) || ((!currencyRef.current?.validity.valid))) {
+    if ((!nameRef.current?.validity.valid) || (!balanceRef.current?.validity.valid) || (!currencyRef.current?.validity.valid)) {
       setWasValidated(true)
       if (!nameRef.current?.validity.valid) nameRef.current?.focus()
       else if (!balanceRef.current?.validity.valid) balanceRef.current?.focus()
@@ -68,7 +68,7 @@ export default function CreateAccountForm() {
       </div>
       <div className="form__row">
         <label className="form__label" htmlFor="currency">{t("Labels.currency")} ({t("Labels.required")})</label>
-        <select ref={currencyRef} name="currency" id="currency" value={currency} onChange={(event) => setCurrency(event.target.value)}>
+        <select ref={currencyRef} className="form__control" name="currency" id="currency" value={currency} required onChange={(event) => setCurrency(event.target.value)}>
           <option value="" hidden></option>
           {Object.keys(currencies).map((key) => {
             const currecny = currencies[key]
@@ -78,7 +78,7 @@ export default function CreateAccountForm() {
         <div className="invalid-feedback">{t("Messages.input-a-balance")}</div>
       </div>
       <button type="submit" className="btn">
-        {t("Labels.create-account")}
+        {t("Labels.create-transaction")}
       </button>
     </form>
   )
