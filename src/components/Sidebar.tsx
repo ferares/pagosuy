@@ -5,7 +5,7 @@ import { Link } from "@/i18n/navigation"
 import { getTranslations } from "next-intl/server"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faChartLine, faCoins, faCommentsDollar, faMoneyBillTransfer, faMoneyCheckDollar, faPiggyBank, faTag, faUser, type IconDefinition } from "@fortawesome/free-solid-svg-icons"
+import { faChartLine, faCommentsDollar, faMoneyBillTransfer, faMoneyCheckDollar, faPiggyBank, faTag, faUser, type IconDefinition } from "@fortawesome/free-solid-svg-icons"
 
 import { type TranslationKey, type Href } from "@/i18n/request"
 
@@ -44,11 +44,6 @@ const links: { icon: IconDefinition, label: TranslationKey, href: Href }[] = [
     icon: faTag,
     label: "Labels.categories",
     href: "/admin/categories",
-  },
-  {
-    icon: faCoins,
-    label: "Labels.currencies",
-    href: "/admin/currencies",
   },
 ]
 

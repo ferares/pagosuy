@@ -27,7 +27,6 @@ export const routing = defineRouting({
     "/admin/transfers": "/admin/transfers",
     "/admin/balances": "/admin/balances",
     "/admin/categories": "/admin/categories",
-    "/admin/currencies": "/admin/currencies",
     "/admin/profile": "/admin/profile",
   }
 })
