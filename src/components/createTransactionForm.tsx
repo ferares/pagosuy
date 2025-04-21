@@ -1,10 +1,12 @@
 "use client"
 
-import { type FormEvent, startTransition, useCallback, useRef, useState } from "react"
+import { type FormEvent, startTransition, useCallback, useEffect, useRef, useState } from "react"
 
-import { useLocale, useTranslations } from "next-intl"
+import { useTranslations } from "next-intl"
 
-import { getAllCurrencies } from "@/helpers/currency"
+import { type Category, type Account } from "@/generated/prisma"
+
+import { logError } from "@/helpers/logger"
 
 import { useRouter } from "@/i18n/navigation"
 
@@ -13,34 +15,40 @@ import { useLoaderContext } from "@/contexts/Loader"
 
 export default function CreateTransactionForm() {
   const t = useTranslations()
-  const locale = useLocale()
-  const currencies = getAllCurrencies(locale)
   const [wasValidated, setWasValidated] = useState(false)
-  const [name, setName] = useState("")
-  const [balance, setBalance] = useState(0)
-  const [currency, setCurrency] = useState("")
+  const [amount, setAmount] = useState<number>()
+  const [accounts, setAccounts] = useState<Account[]>()
+  const [accountId, setAccountId] = useState<number>(0)
+  const [categories, setCategories] = useState<Category[]>()
+  const [categoryId, setCategoryId] = useState<number>()
   const { setLoading } = useLoaderContext()
   const { pushAlert, pushScreenReaderAlert } = useAlertsContext()
-  const nameRef = useRef<HTMLInputElement>(null)
-  const balanceRef = useRef<HTMLInputElement>(null)
-  const currencyRef = useRef<HTMLSelectElement>(null)
+  const amountRef = useRef<HTMLInputElement>(null)
+  const accountRef = useRef<HTMLSelectElement>(null)
   const router = useRouter()
+
+  const getUserAccounts = useCallback(async () => (await (await fetch("/api/accounts/user")).json()) as Account[], [])
+  const getCategories = useCallback(async () => (await (await fetch("/api/categories")).json()) as Category[], [])
+
+  useEffect(() => {
+    getUserAccounts().then(setAccounts).catch(logError)
+    getCategories().then(setCategories).catch(logError)
+  }, [getUserAccounts, getCategories])
 
   const handleSubmit = useCallback(async (event: FormEvent) => {
     event.preventDefault()
     event.stopPropagation()
-    if ((!nameRef.current?.validity.valid) || (!balanceRef.current?.validity.valid) || (!currencyRef.current?.validity.valid)) {
+    if ((!amountRef.current?.validity.valid) || (!accountRef.current?.validity.valid)) {
       setWasValidated(true)
-      if (!nameRef.current?.validity.valid) nameRef.current?.focus()
-      else if (!balanceRef.current?.validity.valid) balanceRef.current?.focus()
-      else if (!currencyRef.current?.validity.valid) currencyRef.current?.focus()
+      if (!amountRef.current?.validity.valid) amountRef.current?.focus()
+      else if (!accountRef.current?.validity.valid) accountRef.current?.focus()
       pushScreenReaderAlert("assertive", t("Messages.invalid-form"))
       return
     }
-    const body = JSON.stringify({ name, balance, currency })
+    const body = JSON.stringify({ accountId, amount, categoryId })
     setLoading(true, t("Messages.submitting"))
     try {
-      const response = await fetch("/api/accounts", { method: "POST", body })
+      const response = await fetch("/api/transactions", { method: "POST", body })
       if (response.ok) {
         return startTransition(() => {
           router.refresh() // Cache busting
@@ -53,29 +61,33 @@ export default function CreateTransactionForm() {
       pushAlert("danger", t("Messages.error"), 3000)
     }
     setLoading(false)
-  }, [name, balance, currency, pushAlert, pushScreenReaderAlert, router, setLoading, t])
+  }, [amount, categoryId, accountId, pushAlert, pushScreenReaderAlert, router, setLoading, t])
   return (
     <form method="POST" noValidate className={`form ${wasValidated ? "was-validated" : ""}`} onSubmit={handleSubmit}>
       <div className="form__row">
-        <label className="form__label" htmlFor="name">{t("Labels.name")} ({t("Labels.required")})</label>
-        <input className="form__control" ref={nameRef} type="text" name="name" id="name" value={name} required onChange={(event) => setName(event.target.value)} />
-        <div className="invalid-feedback">{t("Messages.input-a-name")}</div>
-      </div>
-      <div className="form__row">
-        <label className="form__label" htmlFor="balance">{t("Labels.balance")} ({t("Labels.required")})</label>
-        <input className="form__control" ref={balanceRef} type="number" name="balance" id="balance" value={balance} required onChange={(event) => setBalance(Number(event.target.value))} />
-        <div className="invalid-feedback">{t("Messages.input-a-balance")}</div>
-      </div>
-      <div className="form__row">
-        <label className="form__label" htmlFor="currency">{t("Labels.currency")} ({t("Labels.required")})</label>
-        <select ref={currencyRef} className="form__control" name="currency" id="currency" value={currency} required onChange={(event) => setCurrency(event.target.value)}>
-          <option value="" hidden></option>
-          {Object.keys(currencies).map((key) => {
-            const currecny = currencies[key]
-            return <option key={key} value={currecny.code}>{currecny.name}</option>
-          })}
+        <label className="form__label" htmlFor="category">{t("Labels.category")}</label>
+        <select className="form__control" name="category" id="category" value={categoryId} onChange={(event) => setCategoryId(Number(event.target.value))}>
+          <option value=""></option>
+          {categories?.map((category, index) => (
+            <option key={index} value={category.id}>{category.name}</option>
+          ))}
         </select>
-        <div className="invalid-feedback">{t("Messages.input-a-balance")}</div>
+        <div className="invalid-feedback">{t("Messages.select-a-category")}</div>
+      </div>
+      <div className="form__row">
+        <label className="form__label" htmlFor="amount">{t("Labels.amount")} ({t("Labels.required")})</label>
+        <input className="form__control" ref={amountRef} type="number" name="amount" id="amount" value={amount} required onChange={(event) => setAmount(Number(event.target.value))} />
+        <div className="invalid-feedback">{t("Messages.input-an-amount")}</div>
+      </div>
+      <div className="form__row">
+        <label className="form__label" htmlFor="account">{t("Labels.account")} ({t("Labels.required")})</label>
+        <select ref={accountRef} className="form__control" name="account" id="account" value={accountId} required onChange={(event) => setAccountId(Number(event.target.value))}>
+          <option value="" hidden></option>
+          {accounts?.map((account, index) => (
+            <option key={index} value={account.id}>{account.name}</option>
+          ))}
+        </select>
+        <div className="invalid-feedback">{t("Messages.select-an-account")}</div>
       </div>
       <button type="submit" className="btn">
         {t("Labels.create-transaction")}

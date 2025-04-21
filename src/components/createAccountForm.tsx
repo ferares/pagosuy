@@ -68,7 +68,7 @@ export default function CreateAccountForm() {
       </div>
       <div className="form__row">
         <label className="form__label" htmlFor="currency">{t("Labels.currency")} ({t("Labels.required")})</label>
-        <select ref={currencyRef} name="currency" id="currency" value={currency} onChange={(event) => setCurrency(event.target.value)}>
+        <select className="form__control" ref={currencyRef} name="currency" id="currency" value={currency} onChange={(event) => setCurrency(event.target.value)}>
           <option value="" hidden></option>
           {Object.keys(currencies).map((key) => {
             const currecny = currencies[key]

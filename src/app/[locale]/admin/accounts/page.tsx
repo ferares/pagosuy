@@ -13,7 +13,7 @@ export default async function Accounts() {
       <ul>
         {accounts.map((account, index) => (
           <li key={index}>
-            {account.name}
+            {account.name}: {account.amount.toFixed(2)}
           </li>
         ))}
       </ul>
