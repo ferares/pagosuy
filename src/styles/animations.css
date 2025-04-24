@@ -32,13 +32,13 @@
   }
 
   100% {
-    background: rgba(0 0 0 / 60%);
+    background: rgb(0 0 0 / 60%);
   }
 }
 
 @keyframes background-fade-out {
   0% {
-    background: rgba(0 0 0 / 60%);
+    background: rgb(0 0 0 / 60%);
   }
 
   100% {

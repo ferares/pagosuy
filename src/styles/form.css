@@ -26,8 +26,8 @@
 
 .invalid-feedback {
   color: #F00;
-  font-size: .8rem;
   display: none;
+  font-size: .8rem;
 }
 
 .was-validated *:invalid + .invalid-feedback,

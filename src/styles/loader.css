@@ -20,7 +20,7 @@
 
 .loader.active {
   animation: background-fade-in .3s ease;
-  background-color: rgba(0 0 0 / 60%);
+  background-color: rgb(0 0 0 / 60%);
   opacity: 1;
   visibility: visible;
 }

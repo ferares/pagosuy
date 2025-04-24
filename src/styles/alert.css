@@ -5,7 +5,7 @@
   border-left: 7px solid #000;
   border-radius: 5px;
   bottom: 4rem;
-  box-shadow: 0 0 6px rgba(0 0 0 / 20%);
+  box-shadow: 0 0 6px rgb(0 0 0 / 20%);
   color: var(--color-text);
   display: flex;
   flex-wrap: wrap;
