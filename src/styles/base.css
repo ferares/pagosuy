@@ -27,6 +27,15 @@
   transition: all .5s;
 }
 
+.btn--plus {
+  align-items: center;
+  display: flex;
+  height: 2.5rem;
+  justify-content: center;
+  padding: .5rem;
+  width: 2.5rem;
+}
+
 .btn:hover {
   box-shadow: transparent 0 0 0 3px, rgb(18  18  18 / 20%) 0 8px 24px;
 }
@@ -58,4 +67,15 @@
 .visually-hidden-focusable:not(:focus):not(:focus-within):not(caption),
 .visually-hidden:not(caption) {
   position: absolute !important;
+}
+
+.page-header {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  margin-block: 2rem;
+}
+
+.page-header .title {
+  margin-bottom: 0;
 }

@@ -8,17 +8,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faXmark } from "@fortawesome/free-solid-svg-icons"
 
 import { useCallOnEscContext } from "@/contexts/CallOnEsc"
+import Loader from "./Loader"
 
 export interface ModalProps {
   id: string
   className?: string
   title?: string
+  loading?: string
   open: boolean
   onClose: () => void
   labelledBy: string
 }
 
-export default function Modal({ id, className, open, onClose, title, children, labelledBy }: PropsWithChildren<ModalProps>) {
+export default function Modal({ id, className, open, onClose, title, children, labelledBy, loading }: PropsWithChildren<ModalProps>) {
   const { pushCallOnEsc, removeCallOnEsc } = useCallOnEscContext()
   const [hiding, setHiding] = useState(false)
   const dialogRef = useRef<HTMLDialogElement>(null)
@@ -53,6 +55,7 @@ export default function Modal({ id, className, open, onClose, title, children, l
 
   return (
     <dialog ref={dialogRef} onClick={onClick} className={`modal ${hiding ? "hide" : (open ? "show" : "")} ${className}`} aria-labelledby={labelledBy} onTransitionEnd={handleClose}>
+      <Loader active={!!loading} message={loading} />
       <div className="modal-content">
         <div className="modal-header">
           {title && (
