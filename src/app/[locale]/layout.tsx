@@ -11,6 +11,7 @@ import { locales, type Locale } from "@/i18n/routing"
 
 import { LoaderProvider } from "@/contexts/Loader"
 import { AlertsProvider } from "@/contexts/Alerts"
+import { CallOnEscProvider } from "@/contexts/CallOnEsc"
 
 import Header from "@/components/Header"
 import Footer from "@/components/Footer"
@@ -54,11 +55,13 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       <body className={`${roboto.variable}`}>
         <NextIntlClientProvider messages={messages}>
           <LoaderProvider>
-            <AlertsProvider>
-              <Header />
-              {children}
-              <Footer />
-            </AlertsProvider>
+            <CallOnEscProvider>
+              <AlertsProvider>
+                <Header />
+                {children}
+                <Footer />
+              </AlertsProvider>
+            </CallOnEscProvider>
           </LoaderProvider>
         </NextIntlClientProvider>
       </body>
