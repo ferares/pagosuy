@@ -2,7 +2,7 @@ import { PrismaClient } from "@/generated/prisma"
 
 import { getSessionFromCookie } from "@/helpers/session"
 
-import CreateTransactionForm from "@/components/createTransactionForm"
+import CreateTransactionForm from "@/components/CreateTransactionForm"
 
 export default async function Transactions() {
   const session = (await getSessionFromCookie())!

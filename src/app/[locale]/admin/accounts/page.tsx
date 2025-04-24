@@ -2,7 +2,7 @@ import { PrismaClient } from "@/generated/prisma"
 
 import { getSessionFromCookie } from "@/helpers/session"
 
-import CreateAccountForm from "@/components/createAccountForm"
+import CreateAccountForm from "@/components/CreateAccountForm"
 
 export default async function Accounts() {
   const session = (await getSessionFromCookie())!

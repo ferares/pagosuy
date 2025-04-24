@@ -1,6 +1,6 @@
 import { PrismaClient } from "@/generated/prisma"
 
-import CreateCategoryForm from "@/components/createCategoryForm"
+import CreateCategoryForm from "@/components/CreateCategoryForm"
 
 export default async function Categories() {
   const prisma = new PrismaClient()
