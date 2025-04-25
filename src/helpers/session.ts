@@ -8,7 +8,7 @@ import { PrismaClient } from "@/generated/prisma"
 import { logError } from "./logger"
 
 const { APP_DOMAIN } = process.env
-const ONE_MONTH_SECONDS = 2592000
+const ONE_MONTH_MILISECONDS = 2592000000
 
 function generateSessionKey(length = 32) {
   const buffer = new Uint8Array(length)
@@ -21,7 +21,7 @@ export async function verifySession(key: string) {
     const prisma = new PrismaClient()
     const session = await prisma.session.findFirst({ where: { key } })
     if (!session) return false
-    if (Date.now() - session.lastSeen.getTime() > ONE_MONTH_SECONDS) {
+    if (Date.now() - session.lastSeen.getTime() > ONE_MONTH_MILISECONDS) {
       await prisma.session.delete({ where: { key } })
       return false
     }
@@ -38,7 +38,7 @@ export async function getSessionFromCookie() {
 }
 
 export function setSessionCookie(response: NextResponse, secure: boolean, session: Session) {
-  response.cookies.set({ name: "session", value: JSON.stringify(session), httpOnly: true, sameSite: "strict", secure, maxAge: ONE_MONTH_SECONDS, domain: APP_DOMAIN })
+  response.cookies.set({ name: "session", value: JSON.stringify(session), httpOnly: true, sameSite: "strict", secure, maxAge: ONE_MONTH_MILISECONDS, domain: APP_DOMAIN })
 }
 
 export function deleteSessionCookie(response: NextResponse) {
