@@ -1,10 +1,10 @@
 import { getTranslations } from "next-intl/server"
 
 export default async function Admin() {
-  const t = await getTranslations("Labels")
+  const t = await getTranslations()
   return (
-    <div>
-      <h1>{t("admin")}</h1>
-    </div>
+    <header className="page-header">
+      <h2 className="title">{t("Labels.dashboard")}</h2>
+    </header>
   )
 }
