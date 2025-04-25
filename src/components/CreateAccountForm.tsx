@@ -14,7 +14,7 @@ export default function CreateAccountForm() {
   const locale = useLocale()
   const currencies = getAllCurrencies(locale)
   const [name, setName] = useState("")
-  const [balance, setBalance] = useState(0)
+  const [balance, setBalance] = useState<number>()
   const [currency, setCurrency] = useState("")
   const nameRef = useRef<HTMLInputElement>(null)
   const balanceRef = useRef<HTMLInputElement>(null)
@@ -22,7 +22,7 @@ export default function CreateAccountForm() {
 
   const reset = useCallback(() => {
     setName("")
-    setBalance(0)
+    setBalance(undefined)
     setCurrency("")
   }, [])
 
@@ -47,7 +47,7 @@ export default function CreateAccountForm() {
       </div>
       <div className="form__row">
         <label className="form__label" htmlFor="balance">{t("Labels.balance")} ({t("Labels.required")})</label>
-        <input className="form__control" ref={balanceRef} type="number" name="balance" id="balance" value={balance} required onChange={(event) => setBalance(Number(event.target.value))} />
+        <input className="form__control" ref={balanceRef} type="number" name="balance" id="balance" value={balance ?? ""} required onChange={(event) => setBalance(Number(event.target.value))} />
         <div className="invalid-feedback">{t("Messages.input-a-balance")}</div>
       </div>
       <div className="form__row">
