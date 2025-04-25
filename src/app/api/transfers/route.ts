@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   if ((!senderId) || (!receiverId) || (!amountOut)) return NextResponse.error()
   try {
     const prisma = new PrismaClient()
-    const sendingAccount = await prisma.account.findFirst({ where: { id: senderId } })
+    const sendingAccount = await prisma.account.findFirst({ where: { id: senderId, userAccounts: { some: { userId: session.userId } } } })
     if (!sendingAccount) {
       return NextResponse.json({}, { status: 404 })
     }
