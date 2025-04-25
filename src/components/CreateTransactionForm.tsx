@@ -17,8 +17,10 @@ export default function CreateTransactionForm() {
   const [accountId, setAccountId] = useState<number>()
   const [categories, setCategories] = useState<Category[]>()
   const [categoryId, setCategoryId] = useState<number>()
+  const [description, setDescription] = useState("")
   const amountRef = useRef<HTMLInputElement>(null)
   const accountRef = useRef<HTMLSelectElement>(null)
+  const descriptionRef = useRef<HTMLInputElement>(null)
 
   const getUserAccounts = useCallback(async () => (await (await fetch("/api/accounts/user")).json()) as Account[], [])
   const getCategories = useCallback(async () => (await (await fetch("/api/categories")).json()) as Category[], [])
@@ -29,24 +31,31 @@ export default function CreateTransactionForm() {
   }, [getUserAccounts, getCategories])
 
   const reset = useCallback(() => {
-    setAmount(0)
-    setAccountId(0)
-    setCategoryId(0)
+    setAmount(undefined)
+    setAccountId(undefined)
+    setCategoryId(undefined)
+    setDescription("")
   }, [])
 
   const validate = useCallback(() => {
-    if ((!amountRef.current?.validity.valid) || (!accountRef.current?.validity.valid)) {
+    if ((!amountRef.current?.validity.valid) || (!accountRef.current?.validity.valid) || (!descriptionRef.current?.validity.valid)) {
       if (!amountRef.current?.validity.valid) amountRef.current?.focus()
       else if (!accountRef.current?.validity.valid) accountRef.current?.focus()
+      else if (!descriptionRef.current?.validity.valid) descriptionRef.current?.focus()
       return false
     }
     return true
   }, [])
 
-  const getData = useCallback(() => JSON.stringify({ accountId, amount, categoryId }), [accountId, amount, categoryId])
+  const getData = useCallback(() => JSON.stringify({ description, accountId, amount, categoryId }), [description, accountId, amount, categoryId])
 
   return (
     <ModalForm action={t("Labels.create-transaction")} getData={getData} id="create-transaction" reset={reset} title={t("Labels.create-transaction")} url="/api/transactions" validate={validate}>
+      <div className="form__row">
+        <label className="form__label" htmlFor="category">{t("Labels.description")} ({t("Labels.required")})</label>
+        <input className="form__control" ref={descriptionRef} type="text" name="description" id="description" value={description} required onChange={(event) => setDescription(event.target.value)} />
+        <div className="invalid-feedback">{t("Messages.input-a-description")}</div>
+      </div>
       <div className="form__row">
         <label className="form__label" htmlFor="category">{t("Labels.category")}</label>
         <select className="form__control" name="category" id="category" value={categoryId ?? ""} onChange={(event) => setCategoryId(Number(event.target.value))}>

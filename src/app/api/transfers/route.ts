@@ -8,7 +8,7 @@ import { getSessionFromCookie } from "@/helpers/session"
 export async function POST(req: NextRequest) {
   const session = await getSessionFromCookie()
   if (!session) return NextResponse.json({}, { status: 403 })
-  const { senderId, receiverId, amountIn, amountOut } = await req.json() as { senderId?: number, receiverId?: number, amountIn?: number, amountOut?: number }
+  const { description, senderId, receiverId, amountIn, amountOut } = await req.json() as { description: string, senderId?: number, receiverId?: number, amountIn?: number, amountOut?: number }
   if ((!senderId) || (!receiverId) || (!amountOut)) return NextResponse.error()
   try {
     const prisma = new PrismaClient()
@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({}, { status: 404 })
     }
     const transfer = await prisma.$transaction(async (tx) => {
-      const transfer = await tx.transfer.create({ data: { amountOut, amountIn: amountIn ?? amountOut, senderId, receiverId } })
+      const transfer = await tx.transfer.create({ data: { description, amountOut, amountIn: amountIn ?? amountOut, senderId, receiverId } })
       // Update the realted accounts' balance
       await tx.account.update({ where: { id: senderId }, data: { amount: { decrement: amountOut } } })
       await tx.account.update({ where: { id: receiverId }, data: { amount: { increment: amountIn ?? amountOut } } })

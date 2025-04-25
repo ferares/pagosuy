@@ -17,10 +17,12 @@ export default function CreateTransactionForm() {
   const [accounts, setAccounts] = useState<Account[]>()
   const [senderId, setSenderId] = useState<number>()
   const [receiverId, setReceiverId] = useState<number>()
+  const [description, setDescription] = useState("")
   const amountOutRef = useRef<HTMLInputElement>(null)
   const amountInRef = useRef<HTMLInputElement>(null)
   const senderRef = useRef<HTMLSelectElement>(null)
   const receiverRef = useRef<HTMLSelectElement>(null)
+  const descriptionRef = useRef<HTMLInputElement>(null)
 
   const getAccounts = useCallback(async () => (await (await fetch("/api/accounts")).json()) as Account[], [])
 
@@ -40,27 +42,39 @@ export default function CreateTransactionForm() {
   }, [getAccounts])
 
   const reset = useCallback(() => {
-    setAmountIn(0)
-    setAmountOut(0)
-    setSenderId(0)
-    setReceiverId(0)
+    setAmountIn(undefined)
+    setAmountOut(undefined)
+    setSenderId(undefined)
+    setReceiverId(undefined)
+    setDescription("")
   }, [])
 
   const validate = useCallback(() => {
-    if ((!senderRef.current?.validity.valid) || (!receiverRef.current?.validity.valid) || (!amountOutRef.current?.validity.valid) || (differentCurrencies() && !amountInRef.current?.validity.valid)) {
+    if (
+      (!descriptionRef.current?.validity.valid) ||
+      (!senderRef.current?.validity.valid) ||
+      (!receiverRef.current?.validity.valid) ||
+      (!amountOutRef.current?.validity.valid) ||
+      (differentCurrencies() && !amountInRef.current?.validity.valid)
+    ) {
       if (!senderRef.current?.validity.valid) senderRef.current?.focus()
       else if (!receiverRef.current?.validity.valid) receiverRef.current?.focus()
       else if (!amountOutRef.current?.validity.valid) amountOutRef.current?.focus()
       else if (!amountInRef.current?.validity.valid) amountInRef.current?.focus()
+      else if (!descriptionRef.current?.validity.valid) descriptionRef.current?.focus()
       return false
     }
     return true
   }, [differentCurrencies])
 
-  const getData = useCallback(() => JSON.stringify({ senderId, receiverId, amountOut, amountIn }), [senderId, receiverId, amountOut, amountIn])
+  const getData = useCallback(() => JSON.stringify({ description, senderId, receiverId, amountOut, amountIn }), [description, senderId, receiverId, amountOut, amountIn])
 
   return (
     <ModalForm action={t("Labels.create-transfer")} getData={getData} id="create-transfer" reset={reset} title={t("Labels.create-transfer")} url="/api/transfers" validate={validate}>
+      <div className="form__row">
+        <label className="form__label" htmlFor="category">{t("Labels.description")}</label>
+        <input className="form__control" ref={descriptionRef} type="text" name="description" id="description" value={description} onChange={(event) => setDescription(event.target.value)} />
+      </div>
       <div className="form__row">
         <label className="form__label" htmlFor="sender">{t("Labels.sending-account")} ({t("Labels.required")})</label>
         <select ref={senderRef} className="form__control" name="sender" id="sender" value={senderId ?? ""} required onChange={(event) => setSenderId(Number(event.target.value))}>

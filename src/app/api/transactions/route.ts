@@ -9,8 +9,8 @@ export async function POST(req: NextRequest) {
   // TODO: Receive a list of userIds and amounts if the transaction is shared
   const session = await getSessionFromCookie()
   if (!session) return NextResponse.json({}, { status: 403 })
-  const { accountId, categoryId, amount } = await req.json() as { accountId?: number, categoryId?: number, amount?: number }
-  if ((!accountId) || (!amount)) return NextResponse.error()
+  const { description, accountId, categoryId, amount } = await req.json() as { description?: string, accountId?: number, categoryId?: number, amount?: number }
+  if ((!description)  ||(!accountId) || (!amount)) return NextResponse.error()
   try {
     const prisma = new PrismaClient()
     if (categoryId) {
@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({}, { status: 404 })
     }
     const transaction = await prisma.$transaction(async (tx) => {
-      const transaction = await tx.transaction.create({ data: { amount, accountId, categoryId } })
+      const transaction = await tx.transaction.create({ data: { description, amount, accountId, categoryId } })
       // Update the realted account's balance
       await tx.account.update({ where: { id: accountId }, data: { amount: { decrement: amount } } })
       return transaction

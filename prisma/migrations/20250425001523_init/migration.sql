@@ -45,6 +45,7 @@ CREATE TABLE "UserAccount" (
 -- CreateTable
 CREATE TABLE "Transfer" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "description" TEXT,
     "amountOut" DECIMAL NOT NULL,
     "amountIn" DECIMAL NOT NULL,
     "senderId" INTEGER NOT NULL,
@@ -58,6 +59,7 @@ CREATE TABLE "Transfer" (
 -- CreateTable
 CREATE TABLE "Transaction" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "description" TEXT NOT NULL,
     "amount" DECIMAL NOT NULL,
     "accountId" INTEGER NOT NULL,
     "categoryId" INTEGER,
@@ -96,8 +98,8 @@ CREATE TABLE "Balance" (
 CREATE TABLE "Category" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
-    "parentId" INTEGER,
     "type" TEXT NOT NULL,
+    "parentId" INTEGER,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     CONSTRAINT "Category_parentId_fkey" FOREIGN KEY ("parentId") REFERENCES "Category" ("id") ON DELETE SET NULL ON UPDATE CASCADE

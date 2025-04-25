@@ -70,6 +70,7 @@ model UserAccount {
 
 model Transfer {
   id Int @id @default(autoincrement())
+  description String?
   amountOut Decimal
   amountIn Decimal
   senderId Int
@@ -82,6 +83,7 @@ model Transfer {
 
 model Transaction {
   id Int @id @default(autoincrement())
+  description String
   amount Decimal
   accountId Int
   categoryId Int?
