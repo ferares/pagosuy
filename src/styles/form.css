@@ -24,6 +24,12 @@
   outline: 2px solid var(--outline-color-form-controls);
 }
 
+.form__control:disabled {
+  background-color: var(--bg-color);
+  cursor: not-allowed;
+  opacity: .5;
+}
+
 .invalid-feedback {
   color: #F00;
   display: none;

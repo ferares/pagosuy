@@ -5,6 +5,7 @@
     "signout": "Signout",
     "admin": "Admin",
     "close": "Close",
+    "cancel": "Cancel",
     "dashboard": "Dashboard",
     "profile": "Profile",
     "transactions": "Transactions",
@@ -29,6 +30,8 @@
     "amount-out": "Amount Out",
     "amount-in": "Amount In",
     "category": "Category",
+    "parent-category": "Parent Category",
+    "delete-category": "Delete Category",
     "description": "Description",
     "create-account": "Create Account",
     "create-transaction": "Create Transaction",
@@ -56,7 +59,8 @@
     "dont-have-account": "Don't have an account yet?",
     "have-account": "Already have an account?",
     "forgot-password": "Forgot your password?",
-    "category-already-exists": "There's already a category with that name"
+    "category-already-exists": "There's already a category with that name",
+    "category-deleted": "Category deleted successfully"
   },
   "Metadata": {
     "description": "PagosUY"
