@@ -1,20 +1,19 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 
 import { useTranslations } from "next-intl"
 
 import type { Account } from "@/generated/prisma"
 
-import { logError } from "@/helpers/logger"
-
 import ModalForm from "./ModalForm"
 
-export default function CreateTransactionForm() {
+interface CreateTransactionFormProps { accounts: Pick<Account, "id" | "name" | "currency">[] }
+
+export default function CreateTransactionForm({ accounts }: CreateTransactionFormProps) {
   const t = useTranslations()
   const [amountIn, setAmountIn] = useState<number>()
   const [amountOut, setAmountOut] = useState<number>()
-  const [accounts, setAccounts] = useState<Account[]>()
   const [senderId, setSenderId] = useState<number>()
   const [receiverId, setReceiverId] = useState<number>()
   const [description, setDescription] = useState("")
@@ -23,8 +22,6 @@ export default function CreateTransactionForm() {
   const senderRef = useRef<HTMLSelectElement>(null)
   const receiverRef = useRef<HTMLSelectElement>(null)
   const descriptionRef = useRef<HTMLInputElement>(null)
-
-  const getAccounts = useCallback(async () => (await (await fetch("/api/accounts")).json()) as Account[], [])
 
   const getAccount = useCallback((id: number) => {
     return accounts?.find((account) => account.id === id)
@@ -36,10 +33,6 @@ export default function CreateTransactionForm() {
     const receiverAccount = getAccount(receiverId)
     return senderAccount?.currency !== receiverAccount?.currency
   }, [senderId, receiverId, getAccount])
-
-  useEffect(() => {
-    getAccounts().then(setAccounts).catch(logError)
-  }, [getAccounts])
 
   const reset = useCallback(() => {
     setAmountIn(undefined)

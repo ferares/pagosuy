@@ -11,11 +11,12 @@ export default async function Transfers() {
   const session = (await getSessionFromCookie())!
   const prisma = new PrismaClient()
   const transfers = await prisma.transfer.findMany({ where: { OR: [{ sender: { userAccounts: { some: { userId: session.userId } } } }, { receiver: { userAccounts: { some: { userId: session.userId } } } }] } })
+  const accounts = await prisma.account.findMany()
   return (
     <div>
       <header className="page-header">
         <h2 className="title">{t("Labels.transfers")}</h2>
-        <CreateTransferForm />
+        <CreateTransferForm accounts={accounts.map((account) => ({ id: account.id, currency: account.currency, name: account.name }))} />
       </header>
       <ul>
         {transfers.map((transfer, index) => (

@@ -1,34 +1,24 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 
 import { useTranslations } from "next-intl"
 
 import { type Category, type Account } from "@/generated/prisma"
 
-import { logError } from "@/helpers/logger"
-
 import ModalForm from "./ModalForm"
 
-export default function CreateTransactionForm() {
+interface CreateTransactionFormProps { categories: Category[], accounts: Pick<Account, "id" | "name">[] }
+
+export default function CreateTransactionForm({ accounts, categories }: CreateTransactionFormProps) {
   const t = useTranslations()
   const [amount, setAmount] = useState<number>()
-  const [accounts, setAccounts] = useState<Account[]>()
   const [accountId, setAccountId] = useState<number>()
-  const [categories, setCategories] = useState<Category[]>()
   const [categoryId, setCategoryId] = useState<number>()
   const [description, setDescription] = useState("")
   const amountRef = useRef<HTMLInputElement>(null)
   const accountRef = useRef<HTMLSelectElement>(null)
   const descriptionRef = useRef<HTMLInputElement>(null)
-
-  const getUserAccounts = useCallback(async () => (await (await fetch("/api/accounts/user")).json()) as Account[], [])
-  const getCategories = useCallback(async () => (await (await fetch("/api/categories")).json()) as Category[], [])
-
-  useEffect(() => {
-    getUserAccounts().then(setAccounts).catch(logError)
-    getCategories().then(setCategories).catch(logError)
-  }, [getUserAccounts, getCategories])
 
   const reset = useCallback(() => {
     setAmount(undefined)
